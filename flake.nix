@@ -15,7 +15,7 @@
         rec {
           default = server;
 
-          server = pkgs.buildGoModule {
+          server = pkgs.buildGoModule rec {
             pname = "neko-server";
             version = "${self.shortRev or self.dirtyShortRev}";
 
@@ -57,9 +57,11 @@
             ];
 
             postInstall = ''
-              wrapProgram $out/bin/neko \
+              wrapProgram $out/bin/${meta.mainProgram} \
                 --prefix GST_PLUGIN_PATH : "$GST_PLUGIN_SYSTEM_PATH_1_0" \
             '';
+
+            meta.mainProgram = "neko";
           };
 
           client = pkgs.buildNpmPackage {
