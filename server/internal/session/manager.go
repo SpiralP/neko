@@ -44,8 +44,10 @@ func (manager *SessionManager) New(id string, admin bool, socket types.WebSocket
 
 	manager.mu.Lock()
 	manager.members[id] = session
-	manager.capture.Audio().AddListener()
-	manager.capture.Video().AddListener()
+	audioErr := manager.capture.Audio().AddListener()
+	manager.logger.Err(audioErr).Msgf("Audio().AddListener()")
+	videoErr := manager.capture.Video().AddListener()
+	manager.logger.Err(videoErr).Msgf("Video().AddListener()")
 	manager.mu.Unlock()
 
 	manager.eventsChannel <- types.SessionEvent{

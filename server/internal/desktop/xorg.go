@@ -79,7 +79,7 @@ func (manager *DesktopManagerCtx) SetScreenSize(size types.ScreenSize) error {
 		mu.Unlock()
 	}()
 
-	return xorg.ChangeScreenSize(size.Width, size.Height, size.Rate)
+	return nil
 }
 
 func (manager *DesktopManagerCtx) GetScreenSize() *types.ScreenSize {

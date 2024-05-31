@@ -1,7 +1,6 @@
 package desktop
 
 import (
-	"fmt"
 	"sync"
 	"time"
 
@@ -40,11 +39,6 @@ func (manager *DesktopManagerCtx) Start() {
 	}
 
 	xorg.GetScreenConfigurations()
-
-	err := xorg.ChangeScreenSize(manager.config.ScreenWidth, manager.config.ScreenHeight, manager.config.ScreenRate)
-	manager.logger.Err(err).
-		Str("screen_size", fmt.Sprintf("%dx%d@%d", manager.config.ScreenWidth, manager.config.ScreenHeight, manager.config.ScreenRate)).
-		Msgf("setting initial screen size")
 
 	go xevent.EventLoop(manager.config.Display)
 
